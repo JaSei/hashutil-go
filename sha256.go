@@ -8,7 +8,7 @@ import (
 
 type Sha256 []byte
 
-var badSha256Length = fmt.Errorf("Sha256 must have %d bytes length", sha256.Size)
+var badSha256Length = fmt.Errorf("Sha256 must have a length of %d bytes", sha256.Size)
 
 // convert type Sha256 to string representation (lower case)
 func (hash Sha256) String() string {

@@ -8,7 +8,7 @@ import (
 
 type Sha1 []byte
 
-var badSha1Length = fmt.Errorf("Sha1 must have %d bytes length", sha1.Size)
+var badSha1Length = fmt.Errorf("Sha1 must have a length of %d bytes", sha1.Size)
 
 // convert type Sha1 to string representation (lower case)
 func (hash Sha1) String() string {

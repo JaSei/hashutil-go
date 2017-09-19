@@ -8,7 +8,7 @@ import (
 
 type Md5 []byte
 
-var badMd5Length = fmt.Errorf("Md5 must have %d bytes length", md5.Size)
+var badMd5Length = fmt.Errorf("Md5 must have a length of %d bytes", md5.Size)
 
 // convert type Md5 to string representation (lower case)
 func (hash Md5) String() string {
