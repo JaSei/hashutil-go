@@ -30,4 +30,10 @@ func TestSha256(t *testing.T) {
 	assert.Error(t, err, "X isn't valid char in Sha256")
 
 	assert.Equal(t, EmptySha256().String(), emptySha256, "EmptySha256 function return Sha256 of nothing")
+
+	_, err = BytesToSha256([]byte{})
+	assert.Error(t, err)
+
+	_, err = BytesToSha256([]byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+	assert.NoError(t, err)
 }

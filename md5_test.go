@@ -29,4 +29,11 @@ func TestMd5(t *testing.T) {
 	assert.Error(t, err, "X isn't valid char in Md5")
 
 	assert.Equal(t, EmptyMd5().String(), emptyMd5, "EmptyMd5 function return Md5 of nothing")
+
+	_, err = BytesToMd5([]byte{})
+	assert.Error(t, err)
+
+	_, err = BytesToMd5([]byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+	assert.NoError(t, err)
+
 }

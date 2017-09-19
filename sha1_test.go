@@ -29,4 +29,10 @@ func TestSha1(t *testing.T) {
 	assert.Error(t, err, "X isn't valid char in Sha1")
 
 	assert.Equal(t, EmptySha1().String(), emptySha1, "EmptySha1 function return Sha1 of nothing")
+
+	_, err = BytesToSha1([]byte{})
+	assert.Error(t, err)
+
+	_, err = BytesToSha1([]byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+	assert.NoError(t, err)
 }
