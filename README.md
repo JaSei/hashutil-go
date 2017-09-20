@@ -8,10 +8,8 @@
 [![codecov.io](https://codecov.io/github/avast/hashutil-go/coverage.svg?branch=master)](https://codecov.io/github/avast/hashutil-go?branch=master)
 [![Sourcegraph](https://sourcegraph.com/github.com/avast/hashutil-go/-/badge.svg)](https://sourcegraph.com/github.com/avast/hashutil-go?badge)
 
-hashutil is collection of common hash (crypto) types
-and implement some simple function and method for hash manipulating
-
-hash types are comparable ([]bytes)
+Hashutil is collection of common hash (crypto) types.
+It also contains some helper functions for hash manipulation.
 
 ## SYNOPSIS
 
