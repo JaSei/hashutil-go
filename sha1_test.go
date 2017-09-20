@@ -18,6 +18,8 @@ func TestSha1(t *testing.T) {
 
 	assert.Equal(t, s1, s2, "Upper and lower of same Sha1 are equal")
 
+	assert.True(t, s1.Compare(s2) && s2.Compare(s1))
+
 	assert.Equal(t, s1, (Sha1)(sha1.New().Sum(nil)), "An empty hash calculated by crypto library is equal to hash from string")
 
 	assert.Equal(t, s1.String(), testEmptySha1String, "Convert Sha1 to strings")

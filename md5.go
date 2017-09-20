@@ -1,6 +1,7 @@
 package hashutil
 
 import (
+	"bytes"
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
@@ -13,6 +14,11 @@ var badMd5Length = fmt.Errorf("Md5 must have a length of %d bytes", md5.Size)
 // convert type Md5 to string representation (lower case)
 func (hash Md5) String() string {
 	return hex.EncodeToString(hash)
+}
+
+// compare two Md5 types
+func (hash Md5) Compare(otherHash Md5) bool {
+	return bytes.Compare(hash, otherHash) == 0
 }
 
 // StringToMd5 validate and convert a string to Md5 type

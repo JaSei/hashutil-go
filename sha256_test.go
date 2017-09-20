@@ -18,6 +18,8 @@ func TestSha256(t *testing.T) {
 
 	assert.Equal(t, s1, s2, "Upper and lower of same Sha256 are equal")
 
+	assert.True(t, s1.Compare(s2) && s2.Compare(s1))
+
 	h := sha256.New()
 	assert.Equal(t, s1, (Sha256)(h.Sum(nil)), "An empty hash calculated by crypto library is equal to hash from string")
 

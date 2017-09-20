@@ -1,6 +1,7 @@
 package hashutil
 
 import (
+	"bytes"
 	"crypto/sha1"
 	"encoding/hex"
 	"fmt"
@@ -13,6 +14,11 @@ var badSha1Length = fmt.Errorf("Sha1 must have a length of %d bytes", sha1.Size)
 // convert type Sha1 to string representation (lower case)
 func (hash Sha1) String() string {
 	return hex.EncodeToString(hash)
+}
+
+// compare two Sha1 types
+func (hash Sha1) Compare(otherHash Sha1) bool {
+	return bytes.Compare(hash, otherHash) == 0
 }
 
 // StringToSha1 validate and convert a string to Sha1 type

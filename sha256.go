@@ -1,6 +1,7 @@
 package hashutil
 
 import (
+	"bytes"
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
@@ -13,6 +14,11 @@ var badSha256Length = fmt.Errorf("Sha256 must have a length of %d bytes", sha256
 // convert type Sha256 to string representation (lower case)
 func (hash Sha256) String() string {
 	return hex.EncodeToString(hash)
+}
+
+// compare two Sha256 types
+func (hash Sha256) Compare(otherHash Sha256) bool {
+	return bytes.Compare(hash, otherHash) == 0
 }
 
 // StringToSha256 validate and convert a string to Sha256 type

@@ -18,6 +18,8 @@ func TestMd5(t *testing.T) {
 
 	assert.Equal(t, s1, s2, "Upper and lower of same Md5 are equal")
 
+	assert.True(t, s1.Compare(s2) && s2.Compare(s1))
+
 	assert.Equal(t, s1, (Md5)(md5.New().Sum(nil)), "An empty hash calculated by crypto library is equal to hash from string")
 
 	assert.Equal(t, s1.String(), testEmptyMd5String, "Convert Md5 to strings")
