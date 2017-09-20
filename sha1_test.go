@@ -7,10 +7,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-const emptySha1 = "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+const testEmptySha1String = "da39a3ee5e6b4b0d3255bfef95601890afd80709"
 
 func TestSha1(t *testing.T) {
-	s1, err := StringToSha1(emptySha1)
+	s1, err := StringToSha1(testEmptySha1String)
 	assert.NoError(t, err, "Convert string to Sha1 without errors")
 
 	s2, err := StringToSha1("DA39A3EE5E6B4B0D3255BFEF95601890AFD80709")
@@ -20,7 +20,7 @@ func TestSha1(t *testing.T) {
 
 	assert.Equal(t, s1, (Sha1)(sha1.New().Sum(nil)), "An empty hash calculated by crypto library is equal to hash from string")
 
-	assert.Equal(t, s1.String(), emptySha1, "Convert Sha1 to strings")
+	assert.Equal(t, s1.String(), testEmptySha1String, "Convert Sha1 to strings")
 
 	_, err = StringToSha1("")
 	assert.Error(t, err, "Empty string isn't valid Sha1")
@@ -28,7 +28,7 @@ func TestSha1(t *testing.T) {
 	_, err = StringToSha1("XA39A3EE5E6B4B0D3255BFEF95601890AFD80709")
 	assert.Error(t, err, "X isn't valid char in Sha1")
 
-	assert.Equal(t, EmptySha1().String(), emptySha1, "EmptySha1 function return Sha1 of nothing")
+	assert.Equal(t, EmptySha1().String(), testEmptySha1String, "EmptySha1 function return Sha1 of nothing")
 
 	_, err = BytesToSha1([]byte{})
 	assert.Error(t, err)
