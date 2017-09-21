@@ -25,7 +25,7 @@ func TestMd5(t *testing.T) {
 	assert.Equal(t, s1.String(), testEmptyMd5String, "Convert Md5 to strings")
 
 	_, err = StringToMd5("")
-	assert.Error(t, err, "Empty string isn't valid Md5")
+	assert.Error(t, err, "Empty string isn't valid md5")
 
 	_, err = StringToMd5("X41D8CD98F00B204E9800998ECF8427E")
 	assert.Error(t, err, "X isn't valid char in Md5")
