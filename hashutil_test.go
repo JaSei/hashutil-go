@@ -68,7 +68,8 @@ func TestMixOtherKindOfHashButWithSameLength(t *testing.T) {
 	hash1 := EmptyHash(sha512.New512_256())
 	hash2 := EmptyHash(sha256.New())
 
-	assert.False(t, hash1.Equal(hash2), "Sha512_256 is other hash then Sha256")
+	assert.NotEqual(t, hash1.String(), hash2.String(), "Sha512_256 is other hash then Sha256")
+	assert.False(t, hash1.Equal(hash2))
 
 	hashFake, err := BytesToHash(sha256.New(), hash1.ToBytes())
 
