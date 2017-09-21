@@ -5,7 +5,6 @@ import (
 	"crypto/sha256"
 	"crypto/sha512"
 	"github.com/stretchr/testify/assert"
-	"runtime"
 	"testing"
 )
 
