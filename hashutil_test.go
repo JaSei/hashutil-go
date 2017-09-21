@@ -5,6 +5,7 @@ import (
 	"crypto/sha256"
 	"crypto/sha512"
 	"github.com/stretchr/testify/assert"
+	"runtime"
 	"testing"
 )
 
@@ -65,6 +66,12 @@ func TestMixOtherKindOfHash(t *testing.T) {
 }
 
 func TestMixOtherKindOfHashButWithSameLength(t *testing.T) {
+	goVersion := runtime.Version()
+	// e.g. go1.2.2 linux/amd64
+	if goVersion[2] == 1 && goVersion[4] < 5 {
+		t.Skip("Go 1.4 and less not implement New512_256 function")
+	}
+
 	hash1 := EmptyHash(sha512.New512_256())
 	hash2 := EmptyHash(sha256.New())
 
