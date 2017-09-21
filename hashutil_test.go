@@ -67,6 +67,7 @@ func TestMixOtherKindOfHash(t *testing.T) {
 
 func TestMixOtherKindOfHashButWithSameLength(t *testing.T) {
 	goVersion := runtime.Version()
+	t.Log(goVersion)
 	// e.g. go1.2.2 linux/amd64
 	if goVersion[2] == 1 && goVersion[4] < 5 {
 		t.Skip("Go 1.4 and less not implement New512_256 function")
