@@ -100,3 +100,16 @@ Contributions are very much welcome.
 Makefile provides several handy rules, like README.md `generator` , `setup` for prepare build/dev environment, `test`, `cover`, etc...
 
 Try `make help` for more information.
+
+### Before pull request
+
+please try:
+* run tests (`make test`)
+* run linter (`make lint`)
+* if your IDE don't automaticaly do `go fmt`, run `go fmt` (`make fmt`)
+
+### README
+
+README.md are generate from template [.godocdown.tmpl](.godocdown.tmpl) and code documentation via [godocdown](https://github.com/robertkrimen/godocdown).
+
+Never edit README.md direct, because your change will be lost.
