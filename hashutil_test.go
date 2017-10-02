@@ -4,8 +4,9 @@ import (
 	"crypto/md5"
 	"crypto/sha256"
 	"crypto/sha512"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 const testEmptyMd5String = "d41d8cd98f00b204e9800998ecf8427e"
