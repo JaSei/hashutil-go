@@ -2,8 +2,8 @@ package hashutil
 
 import (
 	"crypto/md5"
-	"crypto/sha256"
-	"crypto/sha512"
+	"crypto/sha1"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -12,17 +12,17 @@ import (
 const testEmptyMd5String = "d41d8cd98f00b204e9800998ecf8427e"
 
 func TestStringToHashAndEqual(t *testing.T) {
-	_, err := StringToHash(md5.New(), "")
+	_, err := StringToMd5("")
 	assert.Error(t, err, "Empty string isn't valid hash")
-	assert.Equal(t, err.Error(), "Hash function represent by '*md5.digest' must have a length of 16 bytes (actual have 0)")
+	assert.Equal(t, err.Error(), "Hash function Md5 must have a length of 16 bytes (actual have 0)")
 
-	_, err = StringToHash(md5.New(), "x41d8cd98f00b204e9800998ecf8427e")
+	_, err = StringToMd5("x41d8cd98f00b204e9800998ecf8427e")
 	assert.Error(t, err, "x isn't isn't valid char in hash")
 
-	hash, err := StringToHash(md5.New(), testEmptyMd5String)
+	hash, err := StringToMd5(testEmptyMd5String)
 	assert.NoError(t, err, "Convert string to Md5 without errors")
 
-	hash2, err := StringToHash(md5.New(), "D41D8CD98F00B204E9800998ECF8427E")
+	hash2, err := StringToMd5("D41D8CD98F00B204E9800998ECF8427E")
 	assert.NoError(t, err, "Convert string to Md5 without errors")
 
 	assert.Equal(t, hash, hash2, "Upper and lower of same Md5 are equal")
@@ -31,49 +31,37 @@ func TestStringToHashAndEqual(t *testing.T) {
 }
 
 func TestBytesToHash(t *testing.T) {
-	_, err := BytesToHash(md5.New(), []byte{})
+	_, err := BytesToMd5([]byte{})
 	assert.Error(t, err)
 
-	_, err = BytesToHash(md5.New(), []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+	_, err = BytesToMd5([]byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
 	assert.NoError(t, err)
 }
 
 func TestEmptyHash(t *testing.T) {
-	hash, err := StringToHash(md5.New(), testEmptyMd5String)
+	hash, err := StringToMd5(testEmptyMd5String)
 	assert.NoError(t, err)
-	assert.Equal(t, hash, EmptyHash(md5.New()))
+	assert.Equal(t, hash, EmptyMd5())
 }
 
 func TestHashToString(t *testing.T) {
-	hash, err := StringToHash(md5.New(), testEmptyMd5String)
+	hash, err := StringToMd5(testEmptyMd5String)
 	assert.NoError(t, err)
 	assert.Equal(t, hash.String(), testEmptyMd5String)
+	assert.Equal(t, hash.UpperString(), strings.ToUpper(testEmptyMd5String))
 }
 
 func TestIsEmpty(t *testing.T) {
-	hash, err := StringToHash(md5.New(), testEmptyMd5String)
+	hash, err := StringToMd5(testEmptyMd5String)
 	assert.NoError(t, err)
 	assert.True(t, hash.IsEmpty())
 }
 
-func TestMixOtherKindOfHash(t *testing.T) {
-	hash1, err := StringToHash(md5.New(), testEmptyMd5String)
+func TestHashTo(t *testing.T) {
+	hash, err := HashToMd5(md5.New())
 	assert.NoError(t, err)
+	assert.True(t, hash.IsEmpty())
 
-	hash2 := EmptyHash(sha256.New())
-
-	assert.False(t, hash1.Equal(hash2))
-}
-
-func TestMixOtherKindOfHashButWithSameLength(t *testing.T) {
-	hash1 := EmptyHash(sha512.New512_256())
-	hash2 := EmptyHash(sha256.New())
-
-	assert.NotEqual(t, hash1.String(), hash2.String(), "Sha512_256 is other hash then Sha256")
-	assert.False(t, hash1.Equal(hash2))
-
-	hashFake, err := BytesToHash(sha256.New(), hash1.ToBytes())
-
-	assert.NoError(t, err)
-	assert.False(t, hashFake.Equal(hash1), "Hash with same content, but other hash function are not equal")
+	hash, err = HashToMd5(sha1.New())
+	assert.Error(t, err)
 }
