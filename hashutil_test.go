@@ -10,6 +10,7 @@ import (
 )
 
 const testEmptyMd5String = "d41d8cd98f00b204e9800998ecf8427e"
+const testEmptyMd5Base64 = "1B2M2Y8AsgTpgAmY7PhCfg=="
 
 func TestStringToHashAndEqual(t *testing.T) {
 	_, err := StringToMd5("")
@@ -64,4 +65,15 @@ func TestHashTo(t *testing.T) {
 
 	_, err = HashToMd5(sha1.New())
 	assert.Error(t, err)
+}
+
+func TestHashToBase64(t *testing.T) {
+	assert.Equal(t, testEmptyMd5Base64, EmptyMd5().ToBase64())
+}
+
+func TestHashToBytes(t *testing.T) {
+	h := EmptyMd5()
+	h2, err := BytesToMd5(h.ToBytes())
+	assert.NoError(t, err)
+	assert.True(t, h.Equal(h2))
 }
