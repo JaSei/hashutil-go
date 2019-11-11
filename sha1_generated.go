@@ -10,8 +10,10 @@ import (
 	"strings"
 )
 
+// Sha1 type represents Sha1 checksum
 type Sha1 []byte
 
+// StringToSha1 return a new Sha1 checksum from string (hex) representation
 func StringToSha1(hexString string) (Sha1, error) {
 	bytes, err := hex.DecodeString(hexString)
 	if err != nil {
@@ -21,6 +23,7 @@ func StringToSha1(hexString string) (Sha1, error) {
 	return BytesToSha1(bytes)
 }
 
+// BytesToSha1 return a new Sha1 checksum from bytes (binary) representation
 func BytesToSha1(bytes []byte) (Sha1, error) {
 	if len(bytes) != 20 {
 		return Sha1{}, fmt.Errorf("Hash function Sha1 must have a length of 20 bytes (actual have %d)", len(bytes))
@@ -30,6 +33,7 @@ func BytesToSha1(bytes []byte) (Sha1, error) {
 
 }
 
+//HashToSha1 return a new Sha1 checksum from hash.Hash representation
 // HashToSha1 convert hashutil.Hash to Sha1
 func HashToSha1(h hash.Hash) (Sha1, error) {
 	return BytesToSha1(h.Sum(nil))
@@ -42,16 +46,16 @@ func EmptySha1() Sha1 {
 }
 
 // Equal return true if is Sha1s equal
-func (a Sha1) Equal(b Sha1) bool {
-	return bytes.Equal(a, b)
+func (h Sha1) Equal(o Sha1) bool {
+	return bytes.Equal(h, o)
 }
 
-// String representation of Sha1
+// String return (hex) string representation of Sha1
 func (h Sha1) String() string {
 	return hex.EncodeToString(h)
 }
 
-// String return hexString representation in upper case of Sha1
+// UpperString return (hex) string representation in upper case of Sha1
 func (h Sha1) UpperString() string {
 	return strings.ToUpper(hex.EncodeToString(h))
 }

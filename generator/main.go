@@ -32,8 +32,10 @@ import (
     "strings"
 )
 
+// {{.Hash}} type represents {{.Hash}} checksum
 type {{.Hash}} []byte
 
+// StringTo{{.Hash}} return a new {{.Hash}} checksum from string (hex) representation
 func StringTo{{.Hash}}(hexString string) ({{.Hash}}, error) {
 	bytes, err := hex.DecodeString(hexString)
 	if err != nil {
@@ -43,6 +45,7 @@ func StringTo{{.Hash}}(hexString string) ({{.Hash}}, error) {
     return BytesTo{{.Hash}}(bytes)
 }
 
+// BytesTo{{.Hash}} return a new {{.Hash}} checksum from bytes (binary) representation
 func BytesTo{{.Hash}}(bytes []byte) ({{.Hash}}, error) {
 	if len(bytes) != {{.Size}} {
         return {{.Hash}}{}, fmt.Errorf("Hash function {{.Hash}} must have a length of {{.Size}} bytes (actual have %d)", len(bytes))
@@ -52,6 +55,7 @@ func BytesTo{{.Hash}}(bytes []byte) ({{.Hash}}, error) {
 
 }
 
+//HashTo{{.Hash}} return a new {{.Hash}} checksum from hash.Hash representation
 // HashTo{{.Hash}} convert hashutil.Hash to {{.Hash}}
 func HashTo{{.Hash}}(h hash.Hash) ({{.Hash}}, error) {
 	return BytesTo{{.Hash}}(h.Sum(nil))
@@ -64,16 +68,16 @@ func Empty{{.Hash}}() {{.Hash}} {
 }
 
 // Equal return true if is {{.Hash}}s equal
-func (a {{.Hash}}) Equal(b {{.Hash}}) bool {
-	return bytes.Equal(a, b)
+func (h {{.Hash}}) Equal(o {{.Hash}}) bool {
+	return bytes.Equal(h, o)
 }
 
-// String representation of {{.Hash}}
+// String return (hex) string representation of {{.Hash}}
 func (h {{.Hash}}) String() string {
 	return hex.EncodeToString(h)
 }
 
-// String return hexString representation in upper case of {{.Hash}}
+// UpperString return (hex) string representation in upper case of {{.Hash}}
 func (h {{.Hash}}) UpperString() string {
 	return strings.ToUpper(hex.EncodeToString(h))
 }

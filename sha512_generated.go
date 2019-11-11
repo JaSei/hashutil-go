@@ -10,8 +10,10 @@ import (
 	"strings"
 )
 
+// Sha512 type represents Sha512 checksum
 type Sha512 []byte
 
+// StringToSha512 return a new Sha512 checksum from string (hex) representation
 func StringToSha512(hexString string) (Sha512, error) {
 	bytes, err := hex.DecodeString(hexString)
 	if err != nil {
@@ -21,6 +23,7 @@ func StringToSha512(hexString string) (Sha512, error) {
 	return BytesToSha512(bytes)
 }
 
+// BytesToSha512 return a new Sha512 checksum from bytes (binary) representation
 func BytesToSha512(bytes []byte) (Sha512, error) {
 	if len(bytes) != 64 {
 		return Sha512{}, fmt.Errorf("Hash function Sha512 must have a length of 64 bytes (actual have %d)", len(bytes))
@@ -30,6 +33,7 @@ func BytesToSha512(bytes []byte) (Sha512, error) {
 
 }
 
+//HashToSha512 return a new Sha512 checksum from hash.Hash representation
 // HashToSha512 convert hashutil.Hash to Sha512
 func HashToSha512(h hash.Hash) (Sha512, error) {
 	return BytesToSha512(h.Sum(nil))
@@ -42,16 +46,16 @@ func EmptySha512() Sha512 {
 }
 
 // Equal return true if is Sha512s equal
-func (a Sha512) Equal(b Sha512) bool {
-	return bytes.Equal(a, b)
+func (h Sha512) Equal(o Sha512) bool {
+	return bytes.Equal(h, o)
 }
 
-// String representation of Sha512
+// String return (hex) string representation of Sha512
 func (h Sha512) String() string {
 	return hex.EncodeToString(h)
 }
 
-// String return hexString representation in upper case of Sha512
+// UpperString return (hex) string representation in upper case of Sha512
 func (h Sha512) UpperString() string {
 	return strings.ToUpper(hex.EncodeToString(h))
 }

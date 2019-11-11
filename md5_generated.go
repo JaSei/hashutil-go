@@ -10,8 +10,10 @@ import (
 	"strings"
 )
 
+// Md5 type represents Md5 checksum
 type Md5 []byte
 
+// StringToMd5 return a new Md5 checksum from string (hex) representation
 func StringToMd5(hexString string) (Md5, error) {
 	bytes, err := hex.DecodeString(hexString)
 	if err != nil {
@@ -21,6 +23,7 @@ func StringToMd5(hexString string) (Md5, error) {
 	return BytesToMd5(bytes)
 }
 
+// BytesToMd5 return a new Md5 checksum from bytes (binary) representation
 func BytesToMd5(bytes []byte) (Md5, error) {
 	if len(bytes) != 16 {
 		return Md5{}, fmt.Errorf("Hash function Md5 must have a length of 16 bytes (actual have %d)", len(bytes))
@@ -30,6 +33,7 @@ func BytesToMd5(bytes []byte) (Md5, error) {
 
 }
 
+//HashToMd5 return a new Md5 checksum from hash.Hash representation
 // HashToMd5 convert hashutil.Hash to Md5
 func HashToMd5(h hash.Hash) (Md5, error) {
 	return BytesToMd5(h.Sum(nil))
@@ -42,16 +46,16 @@ func EmptyMd5() Md5 {
 }
 
 // Equal return true if is Md5s equal
-func (a Md5) Equal(b Md5) bool {
-	return bytes.Equal(a, b)
+func (h Md5) Equal(o Md5) bool {
+	return bytes.Equal(h, o)
 }
 
-// String representation of Md5
+// String return (hex) string representation of Md5
 func (h Md5) String() string {
 	return hex.EncodeToString(h)
 }
 
-// String return hexString representation in upper case of Md5
+// UpperString return (hex) string representation in upper case of Md5
 func (h Md5) UpperString() string {
 	return strings.ToUpper(hex.EncodeToString(h))
 }
