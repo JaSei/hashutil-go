@@ -2,12 +2,12 @@
 package hashutil
 
 import (
-    "bytes"
-	"encoding/hex"
+	"bytes"
 	"encoding/base64"
-    "fmt"
+	"encoding/hex"
+	"fmt"
 	"hash"
-    "strings"
+	"strings"
 )
 
 type Sha256 []byte
@@ -18,12 +18,12 @@ func StringToSha256(hexString string) (Sha256, error) {
 		return Sha256{}, err
 	}
 
-    return BytesToSha256(bytes)
+	return BytesToSha256(bytes)
 }
 
 func BytesToSha256(bytes []byte) (Sha256, error) {
-   	if len(bytes) != 32 {
-        return Sha256{}, fmt.Errorf("Hash function Sha256 must have a length of 32 bytes (actual have %d)", len(bytes))
+	if len(bytes) != 32 {
+		return Sha256{}, fmt.Errorf("Hash function Sha256 must have a length of 32 bytes (actual have %d)", len(bytes))
 	}
 
 	return Sha256(bytes), nil
@@ -37,13 +37,13 @@ func HashToSha256(h hash.Hash) (Sha256, error) {
 
 // EmptySha256 return Sha256 of empty file
 func EmptySha256() Sha256 {
-	h,_ := StringToSha256("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855")
+	h, _ := StringToSha256("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855")
 	return h
 }
 
 // Equal return true if is Sha256s equal
 func (a Sha256) Equal(b Sha256) bool {
-    return bytes.Equal(a, b)
+	return bytes.Equal(a, b)
 }
 
 // String representation of Sha256
@@ -70,4 +70,3 @@ func (h Sha256) ToBase64() string {
 func (h Sha256) IsEmpty() bool {
 	return EmptySha256().Equal(h)
 }
-

@@ -62,6 +62,6 @@ func TestHashTo(t *testing.T) {
 	assert.NoError(t, err)
 	assert.True(t, hash.IsEmpty())
 
-	hash, err = HashToMd5(sha1.New())
+	_, err = HashToMd5(sha1.New())
 	assert.Error(t, err)
 }

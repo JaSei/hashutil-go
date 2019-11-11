@@ -118,7 +118,10 @@ func main() {
 
 		log.Printf("Generate %s", path)
 
-		tmpl.Execute(w, hd)
+		err = tmpl.Execute(w, hd)
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		w.Close()
 	}

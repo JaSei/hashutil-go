@@ -2,12 +2,12 @@
 package hashutil
 
 import (
-    "bytes"
-	"encoding/hex"
+	"bytes"
 	"encoding/base64"
-    "fmt"
+	"encoding/hex"
+	"fmt"
 	"hash"
-    "strings"
+	"strings"
 )
 
 type Sha1 []byte
@@ -18,12 +18,12 @@ func StringToSha1(hexString string) (Sha1, error) {
 		return Sha1{}, err
 	}
 
-    return BytesToSha1(bytes)
+	return BytesToSha1(bytes)
 }
 
 func BytesToSha1(bytes []byte) (Sha1, error) {
-   	if len(bytes) != 20 {
-        return Sha1{}, fmt.Errorf("Hash function Sha1 must have a length of 20 bytes (actual have %d)", len(bytes))
+	if len(bytes) != 20 {
+		return Sha1{}, fmt.Errorf("Hash function Sha1 must have a length of 20 bytes (actual have %d)", len(bytes))
 	}
 
 	return Sha1(bytes), nil
@@ -37,13 +37,13 @@ func HashToSha1(h hash.Hash) (Sha1, error) {
 
 // EmptySha1 return Sha1 of empty file
 func EmptySha1() Sha1 {
-	h,_ := StringToSha1("da39a3ee5e6b4b0d3255bfef95601890afd80709")
+	h, _ := StringToSha1("da39a3ee5e6b4b0d3255bfef95601890afd80709")
 	return h
 }
 
 // Equal return true if is Sha1s equal
 func (a Sha1) Equal(b Sha1) bool {
-    return bytes.Equal(a, b)
+	return bytes.Equal(a, b)
 }
 
 // String representation of Sha1
@@ -70,4 +70,3 @@ func (h Sha1) ToBase64() string {
 func (h Sha1) IsEmpty() bool {
 	return EmptySha1().Equal(h)
 }
-

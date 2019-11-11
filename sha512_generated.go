@@ -2,12 +2,12 @@
 package hashutil
 
 import (
-    "bytes"
-	"encoding/hex"
+	"bytes"
 	"encoding/base64"
-    "fmt"
+	"encoding/hex"
+	"fmt"
 	"hash"
-    "strings"
+	"strings"
 )
 
 type Sha512 []byte
@@ -18,12 +18,12 @@ func StringToSha512(hexString string) (Sha512, error) {
 		return Sha512{}, err
 	}
 
-    return BytesToSha512(bytes)
+	return BytesToSha512(bytes)
 }
 
 func BytesToSha512(bytes []byte) (Sha512, error) {
-   	if len(bytes) != 64 {
-        return Sha512{}, fmt.Errorf("Hash function Sha512 must have a length of 64 bytes (actual have %d)", len(bytes))
+	if len(bytes) != 64 {
+		return Sha512{}, fmt.Errorf("Hash function Sha512 must have a length of 64 bytes (actual have %d)", len(bytes))
 	}
 
 	return Sha512(bytes), nil
@@ -37,13 +37,13 @@ func HashToSha512(h hash.Hash) (Sha512, error) {
 
 // EmptySha512 return Sha512 of empty file
 func EmptySha512() Sha512 {
-	h,_ := StringToSha512("cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e")
+	h, _ := StringToSha512("cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e")
 	return h
 }
 
 // Equal return true if is Sha512s equal
 func (a Sha512) Equal(b Sha512) bool {
-    return bytes.Equal(a, b)
+	return bytes.Equal(a, b)
 }
 
 // String representation of Sha512
@@ -70,4 +70,3 @@ func (h Sha512) ToBase64() string {
 func (h Sha512) IsEmpty() bool {
 	return EmptySha512().Equal(h)
 }
-

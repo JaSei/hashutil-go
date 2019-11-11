@@ -2,12 +2,12 @@
 package hashutil
 
 import (
-    "bytes"
-	"encoding/hex"
+	"bytes"
 	"encoding/base64"
-    "fmt"
+	"encoding/hex"
+	"fmt"
 	"hash"
-    "strings"
+	"strings"
 )
 
 type Md5 []byte
@@ -18,12 +18,12 @@ func StringToMd5(hexString string) (Md5, error) {
 		return Md5{}, err
 	}
 
-    return BytesToMd5(bytes)
+	return BytesToMd5(bytes)
 }
 
 func BytesToMd5(bytes []byte) (Md5, error) {
-   	if len(bytes) != 16 {
-        return Md5{}, fmt.Errorf("Hash function Md5 must have a length of 16 bytes (actual have %d)", len(bytes))
+	if len(bytes) != 16 {
+		return Md5{}, fmt.Errorf("Hash function Md5 must have a length of 16 bytes (actual have %d)", len(bytes))
 	}
 
 	return Md5(bytes), nil
@@ -37,13 +37,13 @@ func HashToMd5(h hash.Hash) (Md5, error) {
 
 // EmptyMd5 return Md5 of empty file
 func EmptyMd5() Md5 {
-	h,_ := StringToMd5("d41d8cd98f00b204e9800998ecf8427e")
+	h, _ := StringToMd5("d41d8cd98f00b204e9800998ecf8427e")
 	return h
 }
 
 // Equal return true if is Md5s equal
 func (a Md5) Equal(b Md5) bool {
-    return bytes.Equal(a, b)
+	return bytes.Equal(a, b)
 }
 
 // String representation of Md5
@@ -70,4 +70,3 @@ func (h Md5) ToBase64() string {
 func (h Md5) IsEmpty() bool {
 	return EmptyMd5().Equal(h)
 }
-

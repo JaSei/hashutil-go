@@ -3,7 +3,7 @@ TEST_PATTERN?=.
 TEST_OPTIONS?=
 VERSION?=$$(cat VERSION)
 LINTER?=$$(which golangci-lint)
-LINTER_VERSION=1.15.0
+LINTER_VERSION=1.21.0
 
 ifeq ($(OS),Windows_NT)
 	LINTER_FILE=golangci-lint-$(LINTER_VERSION)-windows-amd64.zip
@@ -27,6 +27,7 @@ setup:
 
 generate: ## Generate README.md
 	go generate
+	go fmt
 	godocdown >| README.md
 
 test: generate test_and_cover_report lint

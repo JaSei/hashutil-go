@@ -7,6 +7,7 @@
 [![GoDoc](https://godoc.org/github.com/avast/hashutil-go?status.svg&style=flat-square)](http://godoc.org/github.com/avast/hashutil-go)
 [![codecov.io](https://codecov.io/github/avast/hashutil-go/coverage.svg?branch=master)](https://codecov.io/github/avast/hashutil-go?branch=master)
 [![Sourcegraph](https://sourcegraph.com/github.com/avast/hashutil-go/-/badge.svg)](https://sourcegraph.com/github.com/avast/hashutil-go?badge)
+[![GolangCI](https://golangci.com/badges/github.com/golangci/golangci-lint.svg)](https://golangci.com)
 
 Package hashutil is collection of common hash (crypto) types. It also contains
 some helper functions for hash manipulation.
