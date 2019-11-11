@@ -2,6 +2,9 @@
 Package hashutil is collection of common hash (crypto) types.
 It also contains some helper functions for hash manipulation.
 
+Supports Md5, Sha1, Sha256, Sha384, Sha512.
+
+For support other crypto functions please do PR or issue.
 
 
 SYNOPSIS

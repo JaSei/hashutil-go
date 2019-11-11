@@ -97,9 +97,10 @@ func (h {{.Hash}}) IsEmpty() bool {
 
 func main() {
 	hashes := []hashDef{
+		newHashDef("Md5", md5.Size, md5.New()),
 		newHashDef("Sha1", sha1.Size, sha1.New()),
 		newHashDef("Sha256", sha256.Size, sha256.New()),
-		newHashDef("Md5", md5.Size, md5.New()),
+		newHashDef("Sha384", sha512.Size384, sha512.New384()),
 		newHashDef("Sha512", sha512.Size, sha512.New()),
 	}
 
