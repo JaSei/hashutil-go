@@ -1,18 +1,38 @@
 SOURCE_FILES?=$$(go list ./... | grep -v /vendor/)
 TEST_PATTERN?=.
 TEST_OPTIONS?=
+VERSION?=$$(cat VERSION)
+LINTER?=$$(which golangci-lint)
+LINTER_VERSION=1.21.0
 
-setup: ## Install all the build and lint dependencies
-	go get -u github.com/alecthomas/gometalinter
+ifeq ($(OS),Windows_NT)
+	LINTER_FILE=golangci-lint-$(LINTER_VERSION)-windows-amd64.zip
+	LINTER_UNPACK= >| app.zip; unzip -j app.zip -d $$GOPATH/bin; rm app.zip
+else ifeq ($(OS), Darwin)
+	LINTER_FILE=golangci-lint-$(LINTER_VERSION)-darwin-amd64.tar.gz
+	LINTER_UNPACK= | tar xzf - -C $$GOPATH/bin --wildcards --strip 1 "**/golangci-lint"
+else
+	LINTER_FILE=golangci-lint-$(LINTER_VERSION)-linux-amd64.tar.gz
+	LINTER_UNPACK= | tar xzf - -C $$GOPATH/bin --wildcards --strip 1 "**/golangci-lint"
+endif
+
+setup:
 	go get -u github.com/pierrre/gotestcover
 	go get -u golang.org/x/tools/cmd/cover
 	go get -u github.com/robertkrimen/godocdown/godocdown
-	gometalinter --install
+	@if [ "$(LINTER)" = "" ]; then\
+		curl -L https://github.com/golangci/golangci-lint/releases/download/v$(LINTER_VERSION)/$(LINTER_FILE) $(LINTER_UNPACK) ;\
+		chmod +x $$GOPATH/bin/golangci-lint;\
+	fi
 
 generate: ## Generate README.md
+	go generate
+	go fmt
 	godocdown >| README.md
 
-test: generate ## Run all the tests
+test: generat etest_and_cover_report lint
+
+test_and_cover_report:
 	gotestcover $(TEST_OPTIONS) -covermode=atomic -coverprofile=coverage.txt $(SOURCE_FILES) -run $(TEST_PATTERN) -timeout=2m
 
 cover: test ## Run all the tests and opens the coverage report
@@ -22,25 +42,15 @@ fmt: ## gofmt and goimports all go files
 	find . -name '*.go' -not -wholename './vendor/*' | while read -r file; do gofmt -w -s "$$file"; goimports -w "$$file"; done
 
 lint: ## Run all the linters
-	gometalinter --vendor --disable-all \
-		--enable=deadcode \
-		--enable=ineffassign \
-		--enable=gosimple \
-		--enable=staticcheck \
-		--enable=gofmt \
-		--enable=goimports \
-		--enable=dupl \
-		--enable=misspell \
-		--enable=errcheck \
-		--enable=vet \
-		--deadline=10m \
-		--enable=vetshadow \
-		./...
+	golangci-lint run
 
-ci: test lint  ## Run all the tests and code checks
+ci: test_and_cover_report ## Run all the tests but no linters - use https://golangci.com integration instead
 
 build:
 	go build
+
+release: ## Release new version
+	git tag | grep -q $(VERSION) && echo This version was released! Increase VERSION! || git tag $(VERSION) && git push origin $(VERSION) && git tag v$(VERSION) && git push origin v$(VERSION)
 
 # Absolutely awesome: http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 help:
