@@ -1,4 +1,4 @@
-module github.com/JaSei/hashutil-go
+module github.com/JaSei/hashutil-go/v2
 
 go 1.13
 
