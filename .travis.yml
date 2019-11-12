@@ -17,6 +17,7 @@ go:
   - 1.13
 
 install:
+  - if [ "$TRAVIS_OS_NAME" == "windows" ]; then choco install make; fi
   - make setup
 
 script:
