@@ -30,7 +30,7 @@ generate: ## Generate README.md
 	go fmt
 	godocdown >| README.md
 
-test: generat etest_and_cover_report lint
+test: generate test_and_cover_report lint
 
 test_and_cover_report:
 	gotestcover $(TEST_OPTIONS) -covermode=atomic -coverprofile=coverage.txt $(SOURCE_FILES) -run $(TEST_PATTERN) -timeout=2m
