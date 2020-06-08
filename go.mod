@@ -8,6 +8,6 @@ require (
 	github.com/pierrre/gotestcover v0.0.0-20160517101806-924dca7d15f0 // indirect
 	github.com/pkg/errors v0.8.1 // indirect
 	github.com/robertkrimen/godocdown v0.0.0-20130622164427-0bfa04905481 // indirect
-	github.com/stretchr/testify v1.5.1
+	github.com/stretchr/testify v1.6.1
 	golang.org/x/tools v0.0.0-20191111134443-9f4e7946603e // indirect
 )
